@@ -1,41 +1,54 @@
 ﻿using InfiPos.Commons;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System;
+using System.Linq;
 
 namespace InfiPos.Infras.Data.EFRepos
 {
     abstract public class EFRepoBase<T> : IRepository<T> where T : EntityBase
     {
         protected PosContext context = new PosContext();
+        private DbSet<T> dbSet;
+
+        public EFRepoBase()
+        {
+            dbSet = context.Set<T>();
+        }
 
         public int GetCount()
         {
-            return GetDbSet().CountAsync().Result;
+            return dbSet.CountAsync().Result;
         }
 
         public T GetById(int id)
         {
-            return GetDbSet().SingleAsync(p => p.Id == id).Result;
+            return dbSet.SingleAsync(p => p.Id == id).Result;
         }
 
-        public List<T> GetAll()
+        public List<T> GetAll(int page, int size)
         {
-            return GetDbSet().ToListAsync().Result;
+            return dbSet.OrderBy(e => e.Id).Skip(page * (size - 1)).Take(size).ToListAsync().Result;
         }
 
         public void Save(T entity)
         {
-            GetDbSet().Add(entity);
+            if (entity.Id == 0)
+                dbSet.Add(entity);
+            else
+                context.Entry(entity).State = EntityState.Modified;
             context.SaveChanges();
         }
 
         public void Delete(int id)
         {
             var entity = GetById(id);
-            GetDbSet().Remove(entity);
+            dbSet.Remove(entity);
+            context.SaveChanges();
         }
 
-        abstract protected DbSet<T> GetDbSet();
+        public void Dispose()
+        {
+            context.Dispose();
+        }
     }
 }

@@ -10,33 +10,22 @@ namespace InfiPos.UI.ConsoleScratch
     {
         static void Main(string[] args)
         {
-            var repo = new EmployeeEFRepo();
-            var service = new EmployeeService(repo);
-            Console.WriteLine(service.GenerateCode());
+            using (var productRepo = new ProductEFRepo())
+            {
+                //var ajam = Sample.Ajam;
+                //ajam.Id = 2;
+                //ajam.Name = "Ajam Goreng";
+                //productRepo.Save(ajam);
+                //Console.WriteLine(ajam.Name);
 
-            //var ctx = new PosContext();
-            //var product = ctx.Products.SingleAsync(p => p.Id == 1).Result;
-            //Console.WriteLine(product.Name);
-            //ctx.Products.Add(Sample.Momogi);
-            //ctx.SaveChangesAsync();
-            //var momogi = ctx.Products.SingleAsync(p => p.Id == 1).Result;
-
-            ////var task = ctx.Products.SingleAsync(p => p.Id == 1);
-            ////Console.WriteLine("halo");
-            ////Console.WriteLine("hola");
-            ////Console.WriteLine(task.Result.Name);
-
-            //ctx.Employees.Add(Sample.Suyama);
-            //ctx.SaveChanges();
-
-            //var suyama = ctx.Employees.SingleAsync(e => e.Id == 1).Result;
-            //Console.WriteLine(suyama.Name);
-
-
-            //var sale = new Sale { Sales = suyama };
-            //sale.AddLineItem(momogi, 2);
-            //ctx.Sales.Add(sale);
-            //ctx.SaveChanges();
+                var products = productRepo.GetAll(1, 3);
+                foreach (var p in products)
+                {
+                    Console.WriteLine(p.Name);
+                }
+            }
+            //productRepo.Save(Sample.Ajam);
+            //Console.WriteLine(productRepo.GetById(2).Name);
         }
 
         static void MainMain(string[] args)

@@ -1,6 +1,5 @@
 ﻿using InfiPos.Core;
 using InfiPos.Infras.Data.EFRepos;
-using System.Collections.Generic;
 using System.Web.Http;
 
 namespace InfiPos.UI.Web.WebApiPos.Controllers
@@ -9,15 +8,22 @@ namespace InfiPos.UI.Web.WebApiPos.Controllers
     {
         private EmployeeEFRepo employeeRepo = new EmployeeEFRepo();
         
-        public List<Employee> Get()
+        public IHttpActionResult Get(int page = 0, int size = 3)
         {
-            return employeeRepo.GetAll();
+            try { return Ok(employeeRepo.GetAll(page, size)); }
+            catch { return InternalServerError(); }
         }
 
-        public Employee Get(int id)
+        public IHttpActionResult Get(int id)
         {
             var service = new EmployeeService(employeeRepo);
-            return (id == 0)? service.CreateNew() : employeeRepo.GetById(id);
+            return Ok((id == 0)? service.CreateNew() : employeeRepo.GetById(id));
+        }
+
+        public IHttpActionResult Post(Employee employee)
+        {
+            employeeRepo.Save(employee);
+            return Created("/api/employee/" + employee.Id, employee);
         }
     }
 }
