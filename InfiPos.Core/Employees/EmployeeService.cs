@@ -18,5 +18,10 @@
         {
             return "E" + (employeeRepo.GetCount() + 1);
         }
+
+        public void Save(Employee employee)
+        {
+            employeeRepo.Save(employee);
+        }
     }
 }
