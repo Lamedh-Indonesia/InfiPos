@@ -16,13 +16,27 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="e in employees">
+            <tr ng-click="selectEmployee(e)" ng-repeat="e in employees">
                 <td>{{e.Code}}</td>
                 <td>{{e.Name}}</td>
                 <td>{{e.Birthdate}}</td>
             </tr>
         </tbody>
     </table>
+
+    <form ng-submit="save()">
+        <label>Code</label>
+        <input type="text" ng-model="currentEmployee.Code" />
+
+        <label>Name</label>
+        <input type="text" ng-model="currentEmployee.Name" />
+
+        <label>Birthdate</label>
+        <input type="text" ng-model="currentEmployee.Birthdate" />
+
+        <button type="button" ng-click="create()" class="btn btn-success">Create</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
     
     <script src="Scripts/jquery-1.9.1.min.js"></script>
     <script src="Scripts/angular.js"></script>
