@@ -1,0 +1,14 @@
+﻿[
+  {
+    "outputFile": "js/app.js",
+    "inputFile": "js/app.coffee"
+  },
+  {
+    "outputFile": "js/employee.js",
+    "inputFile": "js/employee.coffee"
+  },
+  {
+    "outputFile": "js/product.js",
+    "inputFile": "js/product.coffee"
+  }
+]

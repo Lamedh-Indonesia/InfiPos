@@ -59,11 +59,11 @@ namespace InfiPos.UI.Web.WebApiPos
             //    appId: "",
             //    appSecret: "");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "damn",
+                ClientSecret = "damnsecret"
+            });
         }
     }
 }

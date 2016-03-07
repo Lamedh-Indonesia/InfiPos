@@ -1,0 +1,32 @@
+﻿<h2>Employee</h2>
+
+<table class="table table-hover table-striped">
+    <thead>
+        <tr>
+            <th>Code</th>
+            <th>Name</th>
+            <th>Birthdate</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-click="selectEntity(e)" ng-repeat="e in entities">
+            <td>{{e.Code}}</td>
+            <td>{{e.Name}}</td>
+            <td>{{e.Birthdate}}</td>
+        </tr>
+    </tbody>
+</table>
+
+<form ng-submit="save()">
+    <label>Code</label>
+    <input type="text" ng-model="currentEntity.Code" />
+
+    <label>Name</label>
+    <input type="text" ng-model="currentEntity.Name" />
+
+    <label>Birthdate</label>
+    <input type="text" ng-model="currentEntity.Birthdate" />
+
+    <button type="button" ng-click="create()" class="btn btn-success">Create</button>
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>

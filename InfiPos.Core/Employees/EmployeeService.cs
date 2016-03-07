@@ -1,27 +1,24 @@
-﻿namespace InfiPos.Core
+﻿using InfiPos.Commons;
+using System;
+
+namespace InfiPos.Core
 {
-    public class EmployeeService
+    public class EmployeeService : DomainServiceBase<Employee>
     {
-        private IEmployeeRepo employeeRepo;
 
-        public EmployeeService(IEmployeeRepo employeeRepo)
+        public EmployeeService(IEmployeeRepo employeeRepo) : base(employeeRepo)
         {
-            this.employeeRepo = employeeRepo;
         }
-
-        public Employee CreateNew()
+        
+        public override Employee CreateNew()
         {
             return new Employee { Code = GenerateCode(), };
         }
 
         public string GenerateCode()
         {
-            return "E" + (employeeRepo.GetCount() + 1);
+            return "E" + (entityRepo.GetCount() + 1);
         }
-
-        public void Save(Employee employee)
-        {
-            employeeRepo.Save(employee);
-        }
+        
     }
 }

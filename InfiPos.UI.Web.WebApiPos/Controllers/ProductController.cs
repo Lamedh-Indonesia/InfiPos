@@ -1,13 +1,14 @@
 ﻿using InfiPos.Core;
+using InfiPos.Core.Products;
 using InfiPos.Infras.Data.EFRepos;
 using System.Web.Http;
 
 namespace InfiPos.UI.Web.WebApiPos.Controllers
 {
-    public class EmployeeController : ApiController
+    public class ProductController : ApiController
     {
-        private EmployeeService service = new EmployeeService(new EmployeeEFRepo());
-
+        private ProductService service = new ProductService(new ProductEFRepo());
+        
         public IHttpActionResult Get(int page = 0, int size = 3)
         {
             try { return Ok(service.GetAll(page, size)); }
@@ -16,14 +17,14 @@ namespace InfiPos.UI.Web.WebApiPos.Controllers
 
         public IHttpActionResult Get(int id)
         {
-            var employee = (id == 0) ? service.CreateNew() : service.GetById(id);
-            return employee == null ? (IHttpActionResult)NotFound() : Ok(employee);
+            var product = (id == 0)? service.CreateNew() : this.service.GetById(id);
+            return product == null ? (IHttpActionResult)NotFound() : Ok(product);
         }
 
-        public IHttpActionResult Post(Employee employee)
+        public IHttpActionResult Post(Product product)
         {
-            service.Save(employee);
-            return Created("/api/employee/" + employee.Id, employee);
+            service.Save(product);
+            return Created("/api/product/" + product.Id, product);
         }
 
         public void Delete(int id)
